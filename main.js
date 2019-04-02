@@ -2,7 +2,7 @@
 // ------------------------------------------------------------
 
 // Array of Word Options (all lowercase)
-var wordslist = ["tesla","ferrari","merecede"];
+var wordslist = ["tesla","ferrari","mclaren"];
 
 // Solution will be held here
 var chosenWord = "";
@@ -69,4 +69,89 @@ function startGame() {
 
     // clears the wrong guesses from the previous round
     document.getElementById.("wrong-guesses").innerHTML. = wrongGuesses.join(" ");
+}
+
+// Its where we will do all of the comparisons for matches
+Function checkLetters(Letter) {
+    // This boolean will be toggled based on whether or not a user letter is found in the word
+    var letterInWord = false;
+
+    // Check if a letter exists inside the array at all
+    for (var i = 0; i < numBlanks; i++) {
+        if (chosenWord[i] === letter) {
+            // if the letter exists then the toggle this boolean is true. This will lie used in the next step.
+            letterInWord = true;
+        }
+    }
+    // If the letter exists somewhere in the word, then figure ouit exactly where (which indices)
+    if (letterInWord) {
+        // loop through the word
+        for (var j = 0; j < numBlanks; j++) {
+            // populate the blanksAndSuccesses with every instance of the letter
+            if (chosenWord[j] === letter) {
+                // Here we set the specific space in the blanks and letter when there is a 
+                blanksAndSuccesses[j] = letter;
+
+            }
+        }
+
+        // logging for testing
+        console.log(blanksAndSuccesses);
+
+    }
+
+    //if the letter doesnt exist at all...
+    else {
+
+        //... then we add the letter to the list of wrong letters, and we subtract one of the guesses
+        wrongGuesses.push(letter);
+        numGuesses--i
+
+    }
+}
+
+// here we will have all of the code that needs to be run after each guess is made
+function roundComplete() {
+
+    //First, log an initial status update in the consule telling us how many wins, losses, and guesses are left
+    console.log(`WinCount: ${winCounter} | LossCount: ${lossCounter} | NumGuesses: ${numGuesses}`);
+
+    // update the html to reflect the new number of guesses, also update the correct guesses
+    document.getElementById("guesses-left").innerHTML = numGuesses;
+
+    // this will print the wrong guesses onto the page
+    document.getElementById("word-blank").innerHTML = blanksAndSuccesses.join(" ");
+
+    // this will print the wrong guesses onto the page
+    document.getElementById("wrong-guesses").innerHTML = wrongGuesses.join(" ");
+
+    // if we have gotten all the letters to match the solution...
+    if (lettersInChosenWord.toString() === blanksAndSuccesses.toString()) {
+
+        //...add to the win counter and give the user an alert
+        winCounter++;
+        alert("You WIN!!!");
+
+        // update the win counter in the html and restart the game
+        document.getElementById("win-counter").innerHTML = winCounter;
+        startGame();
+
+    }
+
+    // if weve run out of guesses..
+    else if (numGuesses === 0) {
+
+        // Add to the loss counter
+        lossCounter++;
+
+        // give the user an alert
+        alert("You LOSE");
+
+        //updates the loss counter in the html
+        document.getElementById("loss-counter").innerHTML = lossCounter;
+
+        // restart the game
+        startGame();
+    }
+    
 }
