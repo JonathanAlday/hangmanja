@@ -68,7 +68,7 @@ function startGame() {
     document.getElementById("word-blanks").innerHTML = blanksAndSuccesses.join(" ");
 
     // clears the wrong guesses from the previous round
-    document.getElementById.("wrong-guesses").innerHTML. = wrongGuesses.join(" ");
+    document.getElementById("wrong-guesses").innerHTML = wrongGuesses.join(" ");
 }
 
 // Its where we will do all of the comparisons for matches
@@ -120,7 +120,7 @@ function roundComplete() {
     document.getElementById("guesses-left").innerHTML = numGuesses;
 
     // this will print the wrong guesses onto the page
-    document.getElementById("word-blank").innerHTML = blanksAndSuccesses.join(" ");
+    document.getElementById("word-blanks").innerHTML = blanksAndSuccesses.join(" ");
 
     // this will print the wrong guesses onto the page
     document.getElementById("wrong-guesses").innerHTML = wrongGuesses.join(" ");
@@ -154,4 +154,23 @@ function roundComplete() {
         startGame();
     }
     
+}
+
+// MAIN PROCESS (this is the code that controls what is actuallt running)
+//---------------------------------------------------------------------------------------------------------------
+
+//start the game
+startGame();
+
+//initiate the function for capturing key clicks
+document.onkeyup = function(event) {
+
+    // convert all key clicks to lowercase letters
+    var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+
+    //Runs the code to check for correctness
+    checkLetters(letterGuessed);
+
+    // runs the code after each round is done
+    roundComplete();
 }
